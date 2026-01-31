@@ -1,16 +1,13 @@
-// Функция для инициализации рисования в paint
+
 function initPainting() {
     const paintElement = document.querySelector('.paint');
     if (!paintElement) return;
     
-    // Сохраняем оригинальные размеры и стили
     const originalWidth = paintElement.style.width || '668px';
     const originalHeight = paintElement.style.height || '522px';
     
-    // Полностью очищаем содержимое paint
     paintElement.innerHTML = '';
     
-    // Устанавливаем позиционирование и размеры
     paintElement.style.position = 'relative';
     paintElement.style.overflow = 'hidden';
     paintElement.style.width = originalWidth;
@@ -18,16 +15,14 @@ function initPainting() {
     paintElement.style.backgroundColor = 'white';
     paintElement.style.border = '5px solid black';
     
-    // Создаем палитру цветов
     const colors = [
-        '#000000', // черный
-        '#FE3E36', // красный (как в полосах)
-        '#2E5BFF', // синий
-        '#2ED573', // зеленый
-        '#FFD700'  // желтый
+        '#000000', 
+        '#FE3E36', 
+        '#2E5BFF', 
+        '#2ED573', 
+        '#FFD700'  
     ];
     
-    // Создаем контейнер для палитры
     const palette = document.createElement('div');
     palette.style.cssText = `
         position: absolute;
@@ -44,7 +39,6 @@ function initPainting() {
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     `;
     
-    // Добавляем текст к палитре
     const paletteLabel = document.createElement('span');
     paletteLabel.textContent = 'Цвета: ';
     paletteLabel.style.cssText = `
@@ -55,7 +49,6 @@ function initPainting() {
     `;
     palette.appendChild(paletteLabel);
     
-    // Создаем цветные кнопки в палитре
     let currentColor = colors[0];
     
     colors.forEach(color => {
@@ -80,7 +73,6 @@ function initPainting() {
         
         colorBtn.addEventListener('click', () => {
             currentColor = color;
-            // Обновляем границы всех кнопок
             palette.querySelectorAll('div').forEach(btn => {
                 btn.style.border = `2px solid ${btn.style.backgroundColor === color ? '#000' : '#ccc'}`;
             });
@@ -91,7 +83,6 @@ function initPainting() {
     
     paintElement.appendChild(palette);
     
-    // Создаем контейнер для рисования (будет содержать все точки)
     const drawingArea = document.createElement('div');
     drawingArea.style.cssText = `
         position: absolute;
@@ -104,13 +95,11 @@ function initPainting() {
     `;
     paintElement.appendChild(drawingArea);
     
-    // Переменные для отслеживания состояния рисования
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
-    const brushSize = 8; // Увеличим размер кисти для лучшей видимости
+    const brushSize = 8; 
     
-    // Функция для получения координат относительно paint
     function getPaintCoordinates(e) {
         const rect = paintElement.getBoundingClientRect();
         let x, y;
@@ -123,14 +112,12 @@ function initPainting() {
             y = e.clientY - rect.top;
         }
         
-        // Ограничиваем координаты границами paint
         x = Math.max(brushSize, Math.min(x, rect.width - brushSize));
         y = Math.max(brushSize, Math.min(y, rect.height - brushSize));
         
         return { x, y };
     }
     
-    // Функция рисования точки
     function drawPoint(x, y) {
         const point = document.createElement('div');
         point.style.cssText = `
@@ -147,9 +134,8 @@ function initPainting() {
         drawingArea.appendChild(point);
     }
     
-    // Функция рисования линии между точками
+
     function drawLine(x1, y1, x2, y2) {
-        // Вычисляем расстояние между точками
         const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         
         if (distance === 0) {
@@ -157,7 +143,6 @@ function initPainting() {
             return;
         }
         
-        // Интерполируем точки между началом и концом
         const steps = Math.max(2, Math.floor(distance / (brushSize/2)));
         
         for (let i = 0; i <= steps; i++) {
@@ -168,7 +153,6 @@ function initPainting() {
         }
     }
     
-    // Обработчики событий мыши
     function startDrawing(e) {
         e.preventDefault();
         isDrawing = true;
@@ -184,7 +168,6 @@ function initPainting() {
         
         const { x, y } = getPaintCoordinates(e);
         
-        // Рисуем линию от предыдущей точки к текущей
         drawLine(lastX, lastY, x, y);
         
         lastX = x;
@@ -195,16 +178,13 @@ function initPainting() {
         isDrawing = false;
     }
     
-    // Добавляем обработчики событий для мыши
     paintElement.addEventListener('mousedown', startDrawing);
     paintElement.addEventListener('mousemove', draw);
     paintElement.addEventListener('mouseup', stopDrawing);
     paintElement.addEventListener('mouseleave', stopDrawing);
     
-    // Предотвращаем контекстное меню на элементе paint
     paintElement.addEventListener('contextmenu', (e) => e.preventDefault());
     
-    // Кнопка очистки
     const clearBtn = document.createElement('button');
     clearBtn.textContent = 'Очистить рисунок';
     clearBtn.style.cssText = `
@@ -241,7 +221,6 @@ function initPainting() {
     
 }
 
-// Инициализируем рисование после загрузки страницы
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPainting);
 } else {
@@ -253,21 +232,18 @@ function initMusicNotes() {
     
     if (!musicElement || notes.length === 0) return;
     
-    // Частоты для нот (C4 до B4 - одна октава)
     const noteFrequencies = [
-        261.63, // C4
-        293.66, // D4
-        329.63, // E4
-        349.23, // F4
-        392.00, // G4
-        440.00, // A4
-        493.88  // B4
+        261.63, 
+        293.66, 
+        329.63, 
+        349.23, 
+        392.00, 
+        440.00, 
+        493.88  
     ];
     
-    // Создаем аудиоконтекст
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     
-    // Функция для воспроизведения звука
     function playNote(frequency) {
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
@@ -276,9 +252,8 @@ function initMusicNotes() {
         gainNode.connect(audioContext.destination);
         
         oscillator.frequency.value = frequency;
-        oscillator.type = 'sine'; // Тип волны: sine, square, sawtooth, triangle
+        oscillator.type = 'sine';
         
-        // Настройки огибающей звука
         gainNode.gain.setValueAtTime(0, audioContext.currentTime);
         gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
@@ -287,12 +262,9 @@ function initMusicNotes() {
         oscillator.stop(audioContext.currentTime + 0.5);
     }
     
-    // Функция для создания анимированной ноты
     function createAnimatedNote(originalNote, noteIndex) {
-        // Клонируем ноту
         const clonedNote = originalNote.cloneNode(true);
         
-        // Устанавливаем начальную позицию (такую же, как у оригинала)
         const originalRect = originalNote.getBoundingClientRect();
         const musicRect = musicElement.getBoundingClientRect();
         
@@ -311,30 +283,26 @@ function initMusicNotes() {
             pointer-events: none;
         `;
         
-        // Добавляем клон в music
         musicElement.appendChild(clonedNote);
         
-        // Воспроизводим звук ноты
         const frequency = noteFrequencies[noteIndex % noteFrequencies.length];
         playNote(frequency);
         
-        // Анимация движения вверх
         const startTime = Date.now();
-        const duration = 2000; // 2 секунды
+        const duration = 2000;
         const startY = relativeY;
-        const endY = -150; // Выезжает за верхнюю границу
+        const endY = -150;
         
         function animate() {
             const elapsed = Date.now() - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Плавное движение с ease-out
+
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             const currentY = startY + (endY - startY) * easeProgress;
             
             clonedNote.style.top = `${currentY}px`;
             
-            // Изменяем прозрачность при приближении к верху
             if (progress > 0.7) {
                 clonedNote.style.opacity = 1 - (progress - 0.7) / 0.3;
             }
@@ -342,7 +310,6 @@ function initMusicNotes() {
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                // Удаляем ноту после завершения анимации
                 if (clonedNote.parentNode === musicElement) {
                     musicElement.removeChild(clonedNote);
                 }
@@ -352,17 +319,14 @@ function initMusicNotes() {
         requestAnimationFrame(animate);
     }
     
-    // Добавляем обработчики кликов на каждую ноту
     notes.forEach((note, index) => {
         note.style.cursor = 'pointer';
         note.style.transition = 'transform 0.1s';
         
         note.addEventListener('mousedown', (e) => {
             e.preventDefault();
-            // Эффект нажатия
             note.style.transform = 'scale(0.9)';
             
-            // Создаем анимированную ноту
             createAnimatedNote(note, index);
         });
         
@@ -374,25 +338,21 @@ function initMusicNotes() {
             note.style.transform = 'scale(1)';
         });
         
-        // Для мобильных устройств
         note.addEventListener('touchstart', (e) => {
             e.preventDefault();
             note.style.transform = 'scale(0.9)';
             createAnimatedNote(note, index);
             
-            // Возвращаем размер после задержки
             setTimeout(() => {
                 note.style.transform = 'scale(1)';
             }, 150);
         });
     });
     
-    // Устанавливаем позиционирование для music
     musicElement.style.position = 'relative';
     musicElement.style.overflow = 'hidden';
 }
 
-// Инициализируем оба функционала после загрузки страницы
 document.addEventListener('DOMContentLoaded', () => {
     initPainting();
     initMusicNotes();
@@ -402,10 +362,8 @@ function initChineseTest() {
     const chinaElement = document.querySelector('.china');
     if (!chinaElement) return;
     
-    // Очищаем содержимое
     chinaElement.innerHTML = '';
     
-    // Устанавливаем стили
     chinaElement.style.position = 'relative';
     chinaElement.style.overflow = 'hidden';
     chinaElement.style.backgroundColor = 'white';
@@ -415,7 +373,7 @@ function initChineseTest() {
     chinaElement.style.padding = '20px';
     chinaElement.style.boxSizing = 'border-box';
     
-    // Данные для теста: 10 вопросов с правильными ответами
+
     const testQuestions = [
     {
         russian: "Человек",
@@ -472,7 +430,6 @@ function initChineseTest() {
     let currentQuestion = 0;
     let userAnswers = [];
     
-    // Функция для отображения вопроса
     function showQuestion() {
         chinaElement.innerHTML = '';
         
@@ -483,7 +440,6 @@ function initChineseTest() {
         
         const question = testQuestions[currentQuestion];
         
-        // Создаем контейнер для вопроса
         const questionContainer = document.createElement('div');
         questionContainer.style.cssText = `
             display: flex;
@@ -494,7 +450,6 @@ function initChineseTest() {
             gap: 30px;
         `;
         
-        // Номер вопроса
         const questionNumber = document.createElement('div');
         questionNumber.textContent = `Вопрос ${currentQuestion + 1} из ${testQuestions.length}`;
         questionNumber.style.cssText = `
@@ -503,7 +458,6 @@ function initChineseTest() {
             color: #333;
         `;
         
-        // Слово на русском
         const russianWord = document.createElement('div');
         russianWord.textContent = question.russian;
         russianWord.style.cssText = `
@@ -514,7 +468,6 @@ function initChineseTest() {
             margin-bottom: 20px;
         `;
         
-        // Контейнер для вариантов ответа
         const optionsContainer = document.createElement('div');
         optionsContainer.style.cssText = `
             display: grid;
@@ -524,7 +477,6 @@ function initChineseTest() {
             max-width: 500px;
         `;
         
-        // Создаем кнопки для вариантов ответа
         question.options.forEach((option, index) => {
             const optionButton = document.createElement('button');
             optionButton.textContent = option;
@@ -550,15 +502,12 @@ function initChineseTest() {
             });
             
             optionButton.addEventListener('click', () => {
-                // Сохраняем ответ
                 userAnswers[currentQuestion] = index;
                 
-                // Подсветка выбранного ответа
                 optionButton.style.backgroundColor = '#2E5BFF';
                 optionButton.style.color = 'white';
                 optionButton.style.borderColor = '#2E5BFF';
                 
-                // Переход к следующему вопросу через 0.5 секунды
                 setTimeout(() => {
                     currentQuestion++;
                     showQuestion();
@@ -574,9 +523,7 @@ function initChineseTest() {
         chinaElement.appendChild(questionContainer);
     }
     
-    // Функция для показа результатов
     function showResults() {
-        // Подсчет правильных ответов
         let correctCount = 0;
         testQuestions.forEach((question, index) => {
             if (userAnswers[index] === question.correct) {
@@ -600,7 +547,6 @@ function initChineseTest() {
             padding: 20px;
         `;
         
-        // Заголовок
         const title = document.createElement('div');
         title.textContent = 'Результаты теста';
         title.style.cssText = `
@@ -609,7 +555,7 @@ function initChineseTest() {
             color: #000;
         `;
         
-        // Результат
+
         const result = document.createElement('div');
         result.textContent = `Правильных ответов: ${correctCount} из ${testQuestions.length}`;
         result.style.cssText = `
@@ -617,7 +563,6 @@ function initChineseTest() {
             color: #333;
         `;
         
-        // Процент
         const percentageText = document.createElement('div');
         percentageText.textContent = `Вы на ${percentage.toFixed(0)}% китаец!`;
         percentageText.style.cssText = `
@@ -627,7 +572,6 @@ function initChineseTest() {
             margin-top: 20px;
         `;
         
-        // Шкала прогресса
         const progressBar = document.createElement('div');
         progressBar.style.cssText = `
             width: 80%;
@@ -648,7 +592,6 @@ function initChineseTest() {
         `;
         progressBar.appendChild(progressFill);
         
-        // Сообщение в зависимости от результата
         const message = document.createElement('div');
         let messageText = '';
         if (percentage >= 90) {
@@ -670,7 +613,6 @@ function initChineseTest() {
             line-height: 1.5;
         `;
         
-        // Кнопка перезапуска
         const restartButton = document.createElement('button');
         restartButton.textContent = 'Пройти тест еще раз';
         restartButton.style.cssText = `
@@ -710,11 +652,9 @@ function initChineseTest() {
         chinaElement.appendChild(resultsContainer);
     }
     
-    // Начинаем тест
     showQuestion();
 }
 
-// Инициализируем все функционалы после загрузки страницы
 document.addEventListener('DOMContentLoaded', () => {
     initPainting();
     initMusicNotes();
