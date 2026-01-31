@@ -1,0 +1,161 @@
+@import url('reset.css');
+@import url('font.css');
+@import url('animation.css');
+
+body {
+    background-color: #F0F0F0;
+    font-family: 'Anonymous Pro', sans-serif;
+}
+.start {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+}
+.polosa {
+    background-color: black;
+    width: 1280px;
+    height: 2px;
+}
+.start1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 338px;
+}
+.screen1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+}
+.img1 {
+    width: 766px;
+    height: 632px;
+}
+.img2 {
+    width: 303px;
+    height: 450px;
+}
+.polosa1 {
+    background-color: #FE3E36;
+    width: 1280px;
+    height: 2px;
+    animation-name: wobble;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+.polosa1-1 {
+    background-color: #FE3E36;
+    width: 1280px;
+    height: 2px;
+    animation-name: wobble1;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+.img3 {
+    width: 354px;
+    height: 502px;
+}
+.paint {
+    background-color: white;
+    border: 5px solid black;
+    width: 668px;
+    height: 522px;
+}
+.screen2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 81px;
+    margin-top: 102px;
+    margin-bottom: 102px;
+}
+.polosa2 {
+    background-color: black;
+    width: 2px;
+    height: 522px;
+}
+.note{
+    background-color: black;
+    border-radius: 100px;
+    width: 100px;
+    height: 100px;
+}
+.music {
+    background-color: white;
+    border: 5px solid black;
+    width: 668px;
+    height: 522px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+.img4 {
+    width: 414px;
+    height: 440px;
+}
+.screen3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 64px;
+    margin-top: 102px;
+    margin-bottom: 102px;
+}
+.img5 {
+    width: 360px;
+    height: 508px;
+}
+.china {
+    background-color: white;
+    border: 5px solid black;
+    width: 668px;
+    height: 522px;
+}
+.screen4 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 121px;
+    margin-top: 102px;
+    margin-bottom: 102px;
+}
+.text {
+    font-weight: bold;
+    font-size: 100px;
+}
+.img6 {
+    width: 726px;
+    height: 486px;
+}
+.screen5 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    margin-top: 152px;
+}
+/* Добавьте в конец вашего CSS файла */
+.paint {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Стили для палитры */
+.paint > div:first-child {
+    z-index: 100 !important;
+}
+
+/* Стили для кнопки очистки */
+.paint > button {
+    z-index: 100 !important;
+}
